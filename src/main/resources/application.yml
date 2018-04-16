@@ -1,0 +1,24 @@
+server: 
+  port: 80
+  
+spring: 
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+      enabled: true
+  thymeleaf:
+    mode: HTML5
+    encoding: UTF-8
+    content-type: text/html
+    cache: false
+  datasource: 
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.1.100:3306/monitordb?useUnicode=true&characterEncoding=utf-8
+    username: root
+    password: 123456   
+  jpa:
+    open-in-view: true
+    show-sql: true
+    hibernate:
+      ddl-auto: update
