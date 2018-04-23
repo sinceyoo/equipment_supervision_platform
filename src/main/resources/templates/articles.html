@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+		xmlns:th="http://www.thymeleaf.org" 
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      	data-layout-decorator="layout/main">
+	<head>
+		<title>hahaha</title>	
+		
+		<link rel="stylesheet" href="assets/css/bootstrap-datepicker3.min.css" />
+		<link rel="stylesheet" href="assets/css/bootstrap-timepicker.min.css" />
+		<link rel="stylesheet" href="assets/css/daterangepicker.min.css" />
+		<link rel="stylesheet" href="assets/css/bootstrap-datetimepicker.min.css" />
+		
+		<script src="assets/js/bootstrap-datepicker.min.js"></script>
+		<script src="assets/js/bootstrap-timepicker.min.js"></script>
+		<script src="assets/js/moment.min.js"></script>
+		<script src="assets/js/bootstrap-datepicker-1.8.0-dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
+		<script src="assets/js/moment-2.22.1/locale/zh-cn.js"></script>
+		
+		<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
+		
+		<script language="javascript">
+			var nav = "article";
+			var subnav;
+			
+			jQuery(function($) {
+				
+				if(!ace.vars['old_ie']) $('#start, #end').datetimepicker({
+					 //format: 'MM/DD/YYYY h:mm:ss A',//use this option to display seconds
+					// language:  'zh-CN', 
+					 icons: {
+						time: 'fa fa-clock-o',
+						date: 'fa fa-calendar',
+						up: 'fa fa-chevron-up',
+						down: 'fa fa-chevron-down',
+						previous: 'fa fa-chevron-left',
+						next: 'fa fa-chevron-right',
+						today: 'fa fa-arrows ',
+						clear: 'fa fa-trash',
+						close: 'fa fa-times'
+					 }
+					}).next().on(ace.click_event, function(){
+						$(this).prev().focus();
+					});
+
+				
+			});
+			
+			$(function() {
+		        
+			});		
+			
+			function search() {
+				$("#searchForm").submit();
+			}
+			
+			function toWrite() {
+				location.href = "article/writing";
+			}
+		</script>
+	</head>
+
+	<body>
+		<ul layout:fragment="breadcrumbs" class="breadcrumb">
+			<li>
+				<i class="ace-icon fa fa-home home-icon"></i>
+				<a href="#">首页</a>
+			</li>
+
+			<li>
+				<a href="#">故障知识库</a>
+			</li>
+			<li class="active">编辑文章</li>
+		</ul><!-- /.breadcrumb -->
+		
+		<div layout:fragment="content">
+            <!-- PAGE CONTENT BEGINS -->
+			<div class="widget-box transparent" id="widget-box-13">
+				<div class="widget-header">		
+					<div class="widget-toolbar no-border pull-left">
+						<ul class="nav nav-tabs" id="myTab2">
+							<li class="active">
+								<a data-toggle="tab" href="#all">全部文章</a>
+							</li>
+
+							<li>
+								<a data-toggle="tab" href="#mine">我的文章</a>
+							</li>
+						</ul>
+					</div>
+<!-- 					<h4 class="widget-title lighter pull-right">Tabs With Scroll</h4> -->
+					<div class="col-sm-7 pull-right">
+					<form id="searchForm" action="article/articles" method="get">
+						<div class="col-sm-7">
+							<div class="input-group">
+								<input id="start" name="start" type="text" class="form-control" />
+								<span class="input-group-addon">
+									<i class="fa fa-exchange"></i>
+								</span>
+								<input id="end" name="end" type="text" class="form-control" />
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="input-group">
+								<input type="text" class="form-control" name="vague" value="" />
+								<div class="input-group-btn">
+									<button type="button" class="btn btn-primary btn-sm" onclick="search()">
+										<i class="ace-icon fa fa-search icon-on-right bigger-110"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+					</form>
+						
+						<div class="col-sm-1">
+							<button type="button" class="btn btn-info btn-sm" onclick="publish(1)">写文章</button>
+						</div>
+					</div>
+				</div>
+
+				<div class="widget-body">
+					<div class="widget-main padding-12 no-padding-left no-padding-right">
+						<div class="tab-content padding-4">
+							<div id="all" class="tab-pane in active">
+								<div class="search-results">
+									<div class="search-result" th:each="article:${myArticles}">
+										<h5 class="search-title">
+											<a th:href="|article/detail/${article.id}|" th:text="${article.title}"></a>
+										</h5>
+										<div class="space-6"></div>
+										<div class="time">
+											<i class="ace-icon fa fa-clock-o bigger-110"></i>
+											<span th:text="${#dates.format(article.createTime, 'yyyy/MM/dd HH:mm')}"></span>
+										</div>
+										<div class="space-6"></div>
+										<p class="search-content" th:text="${article.summary}"></p>
+									</div>
+								
+									<div class="search-result">
+										<h5 class="search-title">
+											<a href="#">&quot;Hello, World!&quot; - Wikipedia, the free encyclopedia</a>
+										</h5>
+										<a class="text-success" href="#">en.wikipedia.org</a>
+		
+										<p class="search-content">
+											A &quot;
+											<b>Hello</b>
+			,
+											<b>World</b>
+			!&quot; program is a computer program that outputs &quot;
+											<b>Hello</b>
+			,
+											<b>World</b>!&quot; (or some variant thereof) on a display device. Because it is typically one of the ...
+										</p>
+									</div>
+		
+									<div class="search-result">
+										<h5 class="search-title">
+											<a href="#">Hello World! - GNU Project</a>
+										</h5>
+										<a class="text-success" href="#">www.gnu.org</a>
+			
+										<p class="search-content">
+											<b>Hello World</b>
+			! How the way people code “
+											<b>Hello World</b>” varies depending on their age and job ...
+										</p>
+									</div>
+		
+									<div class="search-result">
+										<h5 class="search-title">
+											<a href="#">HelloWorld.java - Introduction to Programming in Java</a>
+										</h5>
+										<a class="text-success" href="#">introcs.cs.princeton.edu</a>
+			
+										<p class="search-content">
+											<b>HelloWorld</b>
+											code in Java. ...
+											<b>HelloWorld</b>
+			.java. Below is the syntax highlighted version of
+											<b>HelloWorld</b>.java from ...
+										</p>
+									</div>
+		
+									<div class="search-result">
+										<h5 class="search-title">
+											<a href="#">Hello, World! - Learn Python - Free Interactive Python Tutorial</a>
+										</h5>
+										<a class="text-success" href="#">www.learnpython.org</a>
+			
+										<p class="search-content">
+											<b>Hello</b>
+			,
+											<b>World</b>! Python is a very simple language, and has a very straightforward syntax. It encourages programmers to program without boilerplate (prepared) ...
+										</p>
+									</div>
+		
+									<div class="search-result">
+										<h5 class="search-title">
+											<a href="#">Hello World · GitHub Guides</a>
+										</h5>
+										<a class="text-success" href="#">guides.github.com</a>
+			
+										<p class="search-content">
+											The
+											<b>Hello World</b>
+											project is a time-honored tradition in computer programming. It is a simple exercise that gets you started when learning something new. Let's get ...
+										</p>
+									</div>
+									<div class="search-result">
+										<h5 class="search-title">
+											<a href="#">&quot;Hello, World!&quot; - Wikipedia, the free encyclopedia</a>
+										</h5>
+										<a class="text-success" href="#">en.wikipedia.org</a>
+		
+										<p class="search-content">
+											A &quot;
+											<b>Hello</b>
+			,
+											<b>World</b>
+			!&quot; program is a computer program that outputs &quot;
+											<b>Hello</b>
+			,
+											<b>World</b>!&quot; (or some variant thereof) on a display device. Because it is typically one of the ...
+										</p>
+									</div>
+		
+									<div class="search-result">
+										<h5 class="search-title">
+											<a href="#">Hello World! - GNU Project</a>
+										</h5>
+										<a class="text-success" href="#">www.gnu.org</a>
+			
+										<p class="search-content">
+											<b>Hello World</b>
+			! How the way people code “
+											<b>Hello World</b>” varies depending on their age and job ...
+										</p>
+									</div>
+		
+									<div class="search-result">
+										<h5 class="search-title">
+											<a href="#">HelloWorld.java - Introduction to Programming in Java</a>
+										</h5>
+										<a class="text-success" href="#">introcs.cs.princeton.edu</a>
+			
+										<p class="search-content">
+											<b>HelloWorld</b>
+											code in Java. ...
+											<b>HelloWorld</b>
+			.java. Below is the syntax highlighted version of
+											<b>HelloWorld</b>.java from ...
+										</p>
+									</div>
+		
+									<div class="search-result">
+										<h5 class="search-title">
+											<a href="#">Hello, World! - Learn Python - Free Interactive Python Tutorial</a>
+										</h5>
+										<a class="text-success" href="#">www.learnpython.org</a>
+			
+										<p class="search-content">
+											<b>Hello</b>
+			,
+											<b>World</b>! Python is a very simple language, and has a very straightforward syntax. It encourages programmers to program without boilerplate (prepared) ...
+										</p>
+									</div>
+		
+									<div class="search-result">
+										<h5 class="search-title">
+											<a href="#">Hello World · GitHub Guides</a>
+										</h5>
+										<a class="text-success" href="#">guides.github.com</a>
+			
+										<p class="search-content">
+											The
+											<b>Hello World</b>
+											project is a time-honored tradition in computer programming. It is a simple exercise that gets you started when learning something new. Let's get ...
+										</p>
+									</div>
+								</div>
+								<div class="search-area well well-sm text-center">
+									<ul class="pagination">
+										<li class="disabled">
+											<a href="#">
+												<i class="ace-icon fa fa-angle-double-left"></i>
+											</a>
+										</li>
+			
+										<li class="active">
+											<a href="#">1</a>
+										</li>
+			
+										<li>
+											<a href="#">2</a>
+										</li>
+			
+										<li>
+											<a href="#">3</a>
+										</li>
+			
+										<li>
+											<a href="#">4</a>
+										</li>
+			
+										<li>
+											<a href="#">5</a>
+										</li>
+			
+										<li>
+											<a href="#">
+												<i class="ace-icon fa fa-angle-double-right"></i>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+
+							<div id="mine" class="tab-pane">
+								<div class="search-results">
+									<div class="search-result profile-activity" th:each="article:${myArticles}">
+										<h5 class="search-title">
+											<a href="#" th:text="${article.title}"></a>
+										</h5>
+										<div class="space-6"></div>
+										<div class="time">
+											<i class="ace-icon fa fa-clock-o bigger-110"></i>
+											<span th:text="${#dates.format(article.createTime, 'yyyy/MM/dd HH:mm')}"></span>
+										</div>
+										<div class="space-6"></div>
+										<p class="search-content" th:text="${article.summary}"></p>
+										
+										<div class="tools action-buttons">
+											<a th:href="|article/writing/${article.id}|" class="blue">
+												<i class="ace-icon fa fa-pencil bigger-125"></i>
+											</a>
+
+											<a href="#" class="red">
+												<i class="ace-icon fa fa-times bigger-125"></i>
+											</a>
+										</div>
+									</div>
+								</div>
+								<div class="search-area well well-sm text-center">
+									<ul class="pagination">
+										<li class="disabled">
+											<a href="#">
+												<i class="ace-icon fa fa-angle-double-left"></i>
+											</a>
+										</li>
+			
+										<li class="active">
+											<a href="#">1</a>
+										</li>
+			
+										<li>
+											<a href="#">2</a>
+										</li>
+			
+										<li>
+											<a href="#">3</a>
+										</li>
+			
+										<li>
+											<a href="#">4</a>
+										</li>
+			
+										<li>
+											<a href="#">5</a>
+										</li>
+			
+										<li>
+											<a href="#">
+												<i class="ace-icon fa fa-angle-double-right"></i>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>	
+        </div>
+	</body>
+</html>

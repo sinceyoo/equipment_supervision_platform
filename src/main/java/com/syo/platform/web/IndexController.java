@@ -13,4 +13,9 @@ public class IndexController {
 		return "index";
 	}
 	
+	@RequestMapping("/map")
+	public String map() {
+		return "map_data";
+	}
+	
 }

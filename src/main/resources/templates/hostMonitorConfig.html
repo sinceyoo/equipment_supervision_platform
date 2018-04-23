@@ -7,7 +7,6 @@
 		<title>hahaha</title>	
 		
 		<script src="assets/js/bootstrap-tag.min.js"></script>
-		<script src="assets/js/bootbox.js"></script>
 		<script src="js/jquery.form.js"></script>
 		
 		
@@ -50,8 +49,10 @@
 				$("#memoryContinued").val("5");
 				$("#networkContinued").val("5");
 				$("#diskContinued").val("1");
-				$("#saveHistory").attr("checked",false);
-				$("#notice").attr("checked",false);
+				//$("#saveHistory").attr("checked",false);
+				$("#saveHistory").prop("checked",false);
+				//$("#notice").attr("checked",false);
+				$("#notice").prop("checked",false);
 				$("#smsReceivers").val("");
 				if(smsReceivers_tag.values!=null && smsReceivers_tag.values.length>0) {
 					var values = smsReceivers_tag.values;
@@ -84,8 +85,10 @@
 					$("#memoryContinued").val(config.memoryContinued);
 					$("#networkContinued").val(config.networkContinued);
 					$("#diskContinued").val(config.diskContinued);
-					$("#saveHistory").attr("checked",config.saveHistory);
-					$("#notice").attr("checked",config.notice);
+					//$("#saveHistory").attr("checked",config.saveHistory);
+					$("#saveHistory").prop("checked",config.saveHistory);
+					//$("#notice").attr("checked",config.notice);
+					$("#notice").prop("checked",config.notice);
 					
 					$("#smsReceivers").val(config.smsReceivers);
 					if(config.smsReceivers!=null && $.trim(config.smsReceivers)!='') {
